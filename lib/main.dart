@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     getLoggedInState();
     super.initState();
-    Firebase.initializeApp();
+    // Firebase.initializeApp();
   }
 
   getLoggedInState() async {
@@ -52,17 +52,28 @@ class _MyAppState extends State<MyApp> {
         primaryColor: Colors.orange,
         scaffoldBackgroundColor: Colors.white,
         fontFamily: "OverpassRegular",
-        visualDensity: VisualDensity.adaptivePlatformDensity, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.orangeAccent),
+        accentColor: Colors.orangeAccent
       ),
       routes: {
     // '/': (context) => Loading(),
-      '/': (context) => userIsLoggedIn != null ?  userIsLoggedIn ?  HomePage() : Authenticate()
-          : Container(
+      '/': (context) {
+        Firebase.initializeApp();
+        if(userIsLoggedIn != null) {
+          if(userIsLoggedIn){
+            return HomePage();
+          }
+          else{
+            return Authenticate();
+          }
+        }
+        else{
+          return Container(
             child: Center(
               child: Authenticate(),
-
             ),
-          ),
+          );
+        }
+        },
     '/home1': (context) => HomePageOne(),
     // '/location': (context) => MygpsApp(),
     '/my_maps': (context) => MyHomePage(),

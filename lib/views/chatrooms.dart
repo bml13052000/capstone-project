@@ -22,11 +22,11 @@ class _ChatRoomState extends State<ChatRoom> {
       builder: (BuildContext context,AsyncSnapshot snapshot) {
         return snapshot.hasData
             ? ListView.builder(
-                itemCount: snapshot.data.documents.length,
+                itemCount: snapshot.data.docs.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return ChatRoomsTile(
-                    userName: snapshot.data.documents[index].data['chatRoomId']
+                    userName: snapshot.data.docs[index].data['chatRoomId']
                         .toString()
                         .replaceAll("_", "")
                         .replaceAll(Constants.myName, ""),

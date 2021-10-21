@@ -215,6 +215,7 @@ class _ClickPictureState extends State<ClickPicture> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        backgroundColor: Colors.orange,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

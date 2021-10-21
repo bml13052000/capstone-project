@@ -109,6 +109,7 @@ class _HomePageState extends State<HomePage> {
         key: scaffoldKey,
         appBar: AppBar(
           title: Text("Tourist Login"),
+          backgroundColor: Colors.orange,
         ),
         drawer: Container(
           color: Colors.white,
