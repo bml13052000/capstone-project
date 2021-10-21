@@ -49,7 +49,9 @@ class _SignInState extends State<SignIn> {
           HelperFunctions.saveUserEmailSharedPreference(
               userInfoSnapshot.docs[0]["userEmail"]);
 
-          print(userInfoSnapshot.docs[0]["userType"]);
+          // print(userInfoSnapshot.docs[0]["userType"]);
+          HelperFunctions.saveUserTypeSharedPreference(
+              userInfoSnapshot.docs[0]["userType"]);
 
           if(userInfoSnapshot.docs[0]["userType"]=="Tourist"){
             Navigator.pushReplacement(
@@ -84,10 +86,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
-        child: appBarMain(context) ,
-      ),
+      appBar: appBarMain(context),
       body: isLoading
           ? Container(
               child: Center(child: CircularProgressIndicator()),

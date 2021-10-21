@@ -176,6 +176,12 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+        title: Image.asset(
+        "assets/images/logo.png",
+        height: 40,),
+          backgroundColor: Colors.orange,
+        ),
       body: isLoading ? Container(
         child: Center(
           child: CircularProgressIndicator(),

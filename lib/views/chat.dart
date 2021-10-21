@@ -18,19 +18,25 @@ class _ChatState extends State<Chat> {
 
   late Stream<QuerySnapshot> chats;
   TextEditingController messageEditingController = new TextEditingController();
+  String? Chatting_with;
 
   Widget chatMessages(){
     return StreamBuilder(
       stream: chats,
       builder: (BuildContext context, AsyncSnapshot snapshot){
-        return snapshot.hasData ?  ListView.builder(
-          itemCount: snapshot.data.documents.length,
-            itemBuilder: (context, index){
-              return MessageTile(
-                message: snapshot.data.documents[index].data["message"],
-                sendByMe: Constants.myName == snapshot.data!.documents[index].data["sendBy"],
-              );
-            }) : Container();
+         if(snapshot.hasData){
+           return ListView.builder(
+               itemCount: snapshot.data.docs.length,
+               itemBuilder: (context, index){
+                 return MessageTile(
+                   message: snapshot.data.docs[index]["message"],
+                   sendByMe: Constants.myName == snapshot.data!.docs[index]["sendBy"],
+                 );
+               });
+
+        }
+         else{
+           return Container();};
       },
     );
   }
@@ -66,6 +72,10 @@ class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(Constants.myName),
+        backgroundColor: Colors.orange,
+      ),
       body: Container(
         child: Stack(
           children: [

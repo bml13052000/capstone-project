@@ -74,10 +74,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
-        child: appBarMain(context) ,
-        ),
+      appBar: appBarMain(context),
       body: isLoading ? Container(child: Center(child: CircularProgressIndicator(),),) :  Container(
         padding: EdgeInsets.symmetric(horizontal: 24),
         child: Column(

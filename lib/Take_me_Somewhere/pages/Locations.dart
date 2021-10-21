@@ -27,7 +27,7 @@ List<Location> demoLocations = [
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim eget amet viverra eget fames rhoncus. Eget enim venenatis enim porta egestas malesuada et. Consequat mauris lacus euismod montes.',
       location: 'Bengaluru, karnataka',
-      image: 'assets/freedom_park.jpg',
+      image: 'assets/images/freedom_park.jpg',
       rating: 4),
   Location(
       id: 2,
@@ -35,7 +35,7 @@ List<Location> demoLocations = [
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim eget amet viverra eget fames rhoncus. Eget enim venenatis enim porta egestas malesuada et. Consequat mauris lacus euismod montes.',
       location: 'Bengaluru, karnataka',
-      image: 'assets/jawaharlal_nehru.jpg',
+      image: 'assets/images/jawaharlal_nehru.jpg',
       rating: 3),
   Location(
       id: 3,
@@ -43,7 +43,7 @@ List<Location> demoLocations = [
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim eget amet viverra eget fames rhoncus. Eget enim venenatis enim porta egestas malesuada et. Consequat mauris lacus euismod montes.',
       location: 'Bengaluru, karnataka',
-      image: 'assets/kar_chit_paris.jpg',
+      image: 'assets/images/kar_chit_paris.jpg',
       rating: 5),
   Location(
       id: 4,
@@ -51,6 +51,6 @@ List<Location> demoLocations = [
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim eget amet viverra eget fames rhoncus. Eget enim venenatis enim porta egestas malesuada et. Consequat mauris lacus euismod montes.',
       location: 'Bengaluru, karnataka',
-      image: 'assets/orion_mall.jpg',
+      image: 'assets/images/orion_mall.jpg',
       rating: 3),
 ];

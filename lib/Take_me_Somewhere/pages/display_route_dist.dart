@@ -67,8 +67,19 @@ class _DispRouteState extends State<DispRoute> {
             icon: Icon(
               Icons.arrow_back,
             ),
-            onPressed: () => Navigator.pop(context),
+            onPressed: (){_removeMarker();},
           ),
+          actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () { Navigator.pushNamed(context, '/');},
+              child: Icon(
+                Icons.home,
+                size: 26.0,
+              ),
+            )
+          ),],
         ),
         body: GoogleMap(
           mapType: MapType.normal,
@@ -140,5 +151,10 @@ class _DispRouteState extends State<DispRoute> {
       }
       _addPolyLine(polylineCoordinates);
     }
+  }
+
+  _removeMarker() {
+    markers.clear();
+    Navigator.pop(context);
   }
 }

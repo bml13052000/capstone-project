@@ -34,7 +34,7 @@ List<Place> demoPlaces = [
           "The wooden structure of the palace along with the beautiful carvings both inside and outside "
           "showcases the royal culture in different ways.",
       location: 'Bengaluru, Karnataka',
-      image: 'assets/bangalore_palace.jpg',
+      image: 'assets/images/bangalore_palace.jpg',
       rating: 4),
   Place(
       id: 2,
@@ -48,7 +48,7 @@ List<Place> demoPlaces = [
           "4851 feet above sea level, you can see a convoy of weekenders from Bangalore during early hours "
           "catching the glimpse of sunrise.",
       location: 'Bengaluru, Karnataka',
-      image: 'assets/nandi_hills.jpg',
+      image: 'assets/images/nandi_hills.jpg',
       rating: 3),
   Place(
       id: 3,
@@ -63,7 +63,7 @@ List<Place> demoPlaces = [
           "The Lal Bagh Rock which is over 3000 million years old is found here and is a major tourist "
           "attraction. ",
       location: 'Bengaluru, Karnataka',
-      image: 'assets/lalbagh.jpg',
+      image: 'assets/images/lalbagh.jpg',
       rating: 5),
   Place(
       id: 4,
@@ -80,7 +80,7 @@ List<Place> demoPlaces = [
           "palace. One is bound to get a glimpse into the royal lifestyle of Tipu Sultan as they explore the "
           "palace.",
       location: 'Bengaluru, Karnataka',
-      image: 'assets/tipu_sultan.jpg',
+      image: 'assets/images/tipu_sultan.jpg',
       rating: 4),
   Place(
       id: 5,
@@ -96,7 +96,7 @@ List<Place> demoPlaces = [
           "of the Lord. The temple community also organises songs and recitals admiring and praying to Krishna "
           "in public processions. ",
       location: 'Bengaluru, Karnataka',
-      image: 'assets/isckon_temple.jpg',
+      image: 'assets/images/isckon_temple.jpg',
       rating: 8),
   Place(
       id: 6,
@@ -112,7 +112,7 @@ List<Place> demoPlaces = [
           "sophisticated poise and glorified grandiose. The entire monument is illuminated on Sundays and "
           "public holidays and is a sight for sore eyes.",
       location: 'Bengaluru, Karnataka',
-      image: 'assets/vidhana_soudha.jpg',
+      image: 'assets/images/vidhana_soudha.jpg',
       rating: 9),
   Place(
       id: 7,
@@ -127,7 +127,7 @@ List<Place> demoPlaces = [
           "Iyer Memorial Park are also situated here. Another famous attraction in the Cubbon Park is The "
           "Bangalore Aquarium, which is the second largest aquarium in India.",
       location: 'Bengaluru, Karnataka',
-      image: 'assets/cubbon_park.jpg',
+      image: 'assets/images/cubbon_park.jpg',
       rating: 5),
   Place(
       id: 8,
@@ -145,7 +145,7 @@ List<Place> demoPlaces = [
           "other similar objects. The backdrop shows surreal pictures and animations of changing the climate, "
           "various sea and land dynamics and different planetary positions.",
       location: 'Bengaluru, Karnataka',
-      image: 'assets/visvesvaraya_museum.jpg',
+      image: 'assets/images/visvesvaraya_museum.jpg',
       rating: 7),
   Place(
       id: 9,
@@ -163,7 +163,7 @@ List<Place> demoPlaces = [
           "museum houses incredible works of Venkatappa himself which include the very famous painting of the "
           "Ooty sunrise, the dazzling Nilgiri hills, a scenic Church Hill view etc.",
       location: 'Bengaluru, Karnataka',
-      image: 'assets/venkatappa_art.jpg',
+      image: 'assets/images/venkatappa_art.jpg',
       rating: 7),
   Place(
       id: 10,
@@ -179,6 +179,6 @@ List<Place> demoPlaces = [
           "Bangalore City at that time. It was also called Gandhadhakotikere at that time as the Government "
           "Sandalwood Depot was situated near it.",
       location: 'Bengaluru, Karnataka',
-      image: 'assets/sankey_tank.jpg',
+      image: 'assets/images/sankey_tank.jpg',
       rating: 7),
 ];

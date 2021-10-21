@@ -6,6 +6,7 @@ import 'package:chatapp/services/auth.dart';
 import 'package:chatapp/services/database.dart';
 import 'package:chatapp/views/chat.dart';
 import 'package:chatapp/views/search.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class ChatRoom extends StatefulWidget {
@@ -14,7 +15,7 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
-  late Stream chatRooms;
+  dynamic chatRooms;
 
   Widget chatRoomsList() {
     return StreamBuilder(
@@ -26,11 +27,11 @@ class _ChatRoomState extends State<ChatRoom> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return ChatRoomsTile(
-                    userName: snapshot.data.docs[index].data['chatRoomId']
+                    userName: snapshot.data.docs[index]['chatRoomId']
                         .toString()
                         .replaceAll("_", "")
                         .replaceAll(Constants.myName, ""),
-                    chatRoomId: snapshot.data.documents[index].data["chatRoomId"],
+                    chatRoomId: snapshot.data.docs[index]["chatRoomId"],
                   );
                 })
             : Container();
@@ -40,8 +41,11 @@ class _ChatRoomState extends State<ChatRoom> {
 
   @override
   void initState() {
+    // Firebase.initializeApp();
+    // getUserInfogetChats();
     getUserInfogetChats();
     super.initState();
+
   }
 
   getUserInfogetChats() async {
@@ -63,6 +67,7 @@ class _ChatRoomState extends State<ChatRoom> {
           "assets/images/logo.png",
           height: 40,
         ),
+        backgroundColor: Colors.orange,
         elevation: 0.0,
         centerTitle: false,
         actions: [

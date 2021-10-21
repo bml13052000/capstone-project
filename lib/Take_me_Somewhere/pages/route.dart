@@ -6,18 +6,6 @@ import 'package:chatapp/Take_me_Somewhere/pages/display_route_time.dart';
 import 'package:chatapp/Take_me_Somewhere/pages/new_recommendation.dart';
 import 'package:chatapp/Take_me_Somewhere/pages/gps.dart';
 
-void main(){
-  runApp(RouteFind());
-}
-
-class RouteFind extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return RouteState();
-  }
-}
-
-class RouteState extends State<RouteFind> {
 
 var dist_path;
 var time_path;
@@ -34,22 +22,22 @@ var route_coords_dist;
 var route_coords_time;
 var coords_time;
 
+void main(){
+  runApp(RouteFind());
+}
+
+class RouteFind extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return RouteState();
+  }
+}
+
+class RouteState extends State<RouteFind> {
 // String MainURL = "http://192.168.1.20:8000";
 String MainURL = "http://aditi21.pythonanywhere.com";
 
-
-
 SendDataDistance()async{
-  // print(lat);
-  // print(lats);
-  // lat.insert(0, lats);
-  // print(lat);
-  // // print(lng);
-  // print(longs);
-  // lng.insert(0, longs);
-  // print(lng);
-  // title.insert(0, 'Current Location');
-  // print(title);
   String url = MainURL + "/path_generation_by_distance/";
   final http.Response response = await http.post(Uri.parse(url),
   body: jsonEncode({
@@ -77,8 +65,9 @@ SendDataDistance()async{
     for(var i=0; i<p1.length; i++) {
       coords_dist[i].add(p1[i]);
     }
+    Navigator.pushNamed(context, '/order_page_dist');
     // print(coords_dist);
-    return dist_path;
+    // return dist_path;
   }
 }
 
@@ -107,8 +96,9 @@ SendDataTime()async{
     for(var i=0; i<p2.length; i++) {
       coords_time[i].add(p2[i]);
     }
+    Navigator.pushNamed(context, '/order_page_time');
     // print(coords_time);
-    return time_path;
+    // return time_path;
   }
 }
 
@@ -129,103 +119,80 @@ SendDataTime()async{
         ),
         ),
         body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: ElevatedButton(
-                    onPressed: (){
-                      SendDataDistance();
-                    },
-                    child: Text('Find path by distance'),
-                    style: ElevatedButton.styleFrom(shape: StadiumBorder(), primary: Colors.brown)
+          child: Stack(
+            children: <Widget>[
+              Container(
+                decoration: new BoxDecoration(
+                  image: new DecorationImage(
+                    image: new AssetImage("images/background.PNG"),
+                    fit: BoxFit.cover,
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: Column(
-                    children: <Widget> [
-                        Text(route_dist,
-                            style: TextStyle(fontWeight: FontWeight.bold,
-                                              color: Colors.grey.withOpacity(1.0),
-                                              fontSize: 12,
-                                        ),),
-                    ]
+              ),
+              Container(
+                color: Color(0x88e5d1b8),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [ Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                            "Search Best Route based on Distance or Time",
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                            textAlign: TextAlign.center,
+                          ),
+                        SizedBox(height:40),
+                        Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: ElevatedButton(
+                            onPressed: (){
+                              SendDataDistance();
+                            },
+                            child: Text(
+                              'Find path by distance',
+                              style: TextStyle(
+                                fontSize: 23.0,
+                                fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(32.0)),
+                                      minimumSize: Size(205, 50), primary: Colors.brown)
+                          ),
+                        ),
+                        SizedBox(height:30),
+                        Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: ElevatedButton(
+                            onPressed: (){
+                              SendDataTime();
+                            },
+                            child: Text(
+                              'Find path by time',
+                              style: TextStyle(
+                                fontSize: 23.0,
+                                fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(32.0)),
+                                      minimumSize: Size(205, 50),
+                            primary: Colors.brown)
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: Column(
-                    children: <Widget> [
-                        Text(r,
-                        style: TextStyle(fontWeight: FontWeight.bold,
-                                              color: Colors.grey.withOpacity(1.0),
-                                              fontSize: 12,
-                                        ),),
-                    ]
-                    ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(30.0),
-                  child: ElevatedButton(
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => DispRoute(coords_dist,),));
-                    },
-                    child: Text('Show in Maps'),
-                    style: ElevatedButton.styleFrom(shape: StadiumBorder(), primary: Colors.brown)
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: ElevatedButton(
-                    onPressed: (){
-                      SendDataTime();
-                    },
-                    child: Text('Find path by time'),
-                    style: ElevatedButton.styleFrom(shape: StadiumBorder(), primary: Colors.brown)
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: Column(
-                    children: <Widget> [
-                        Text(route_time,
-                        style: TextStyle(fontWeight: FontWeight.bold,
-                                              color: Colors.grey.withOpacity(1.0),
-                                              fontSize: 12,
-                                        ),),
-                    ]
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: Column(
-                    children: <Widget> [
-                        Text(t,
-                        style: TextStyle(fontWeight: FontWeight.bold,
-                                              color: Colors.grey.withOpacity(1.0),
-                                              fontSize: 12,
-                                        ),),
-                    ]
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(30.0),
-                  child: ElevatedButton(
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => DispTime(coords_time,),));
-                    },
-                    child: Text('Show in Maps'),
-                    style: ElevatedButton.styleFrom(shape: StadiumBorder(), primary: Colors.brown)
-                  ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
-        ),
-      ),
+        )
+      )
     );
   }
 }
