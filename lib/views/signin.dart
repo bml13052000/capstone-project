@@ -52,6 +52,10 @@ class _SignInState extends State<SignIn> {
           // print(userInfoSnapshot.docs[0]["userType"]);
           HelperFunctions.saveUserTypeSharedPreference(
               userInfoSnapshot.docs[0]["userType"]);
+          HelperFunctions.savePhoneNumberSharedPreference(
+            "91"+userInfoSnapshot.docs[0]["phoneNumber"]
+          );
+          print("Phone"+userInfoSnapshot.docs[0]["phoneNumber"]);
 
           if(userInfoSnapshot.docs[0]["userType"]=="Tourist"){
             Navigator.pushReplacement(
@@ -103,7 +107,21 @@ class _SignInState extends State<SignIn> {
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: [
-                  Spacer(),
+                  Expanded(
+                    child: Center(
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text("Welcome",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+
+                        ),
+                      ),
+                    ),
+                  ),
                   Form(
                     key: formKey,
                     child: Column(
@@ -188,7 +206,7 @@ class _SignInState extends State<SignIn> {
                   ),
                   GestureDetector(
                     onTap: (){
-                    authService.signInWithGoogle(context);
+                    signInGoogle();
                       },
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 16),

@@ -23,6 +23,7 @@ class _paymentState extends State<payment> {
   Razorpay razorpay = new Razorpay();
   TextEditingController amount = new TextEditingController();
   var useremail;
+  var phoneNumber;
 
 
   @override
@@ -32,6 +33,7 @@ class _paymentState extends State<payment> {
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, onError);
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, onExternal);
     getUserEmail();
+    getPhoneNumber();
   }
 
   getUserEmail() async {
@@ -40,6 +42,15 @@ class _paymentState extends State<payment> {
         useremail  = val;
       });
     });
+  }
+
+  getPhoneNumber() async {
+    await HelperFunctions.getPhoneNumberSharedPreference().then((val){
+      setState(() {
+        phoneNumber = val;
+      });
+    });
+    print("PhoneFromPayments"+phoneNumber);
   }
 
   void onSuccess(PaymentSuccessResponse Response){
@@ -77,7 +88,7 @@ class _paymentState extends State<payment> {
       "name" : "Smaarak",
       "description" : "Payment to: "+widget.payto,
       "prefill" : {
-        "contact" : "912323232323",
+        "contact" : phoneNumber,
         "email" : useremail,
       },
       "external" : {
@@ -112,7 +123,7 @@ class _paymentState extends State<payment> {
           ElevatedButton(
             onPressed: (){
               DatabaseMethods().deleteChat(widget.chatRoomID);
-              Navigator.popUntil(context, ModalRoute.withName("/"));
+              Navigator.of(context).popUntil((ModalRoute.withName("/")));
             },
             child: Text("OK"),
           ),

@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   late User user;
   bool isloggedin = false;
   late String country;
+  var userName;
 
   Completer<GoogleMapController> _controllerGoogleMap = Completer();
   //GoogleMapController newGoogleMapController;
@@ -103,6 +104,15 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     this.checkAuthentification();
     this.getUser();
+    getUserName();
+  }
+
+  getUserName() async {
+    await HelperFunctions.getUserNameSharedPreference().then((val){
+      setState(() {
+        userName = val;
+      });
+    });
   }
 
   @override
@@ -110,88 +120,21 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
-          title: Text("Tourist Login"),
+          title: Text("Hello ${userName}"),
           backgroundColor: Colors.orange,
-        ),
-        drawer: Container(
-          color: Colors.white,
-          width: 255.0,
-          child: Drawer(
-            child: ListView(
-              children: [
-                Container(
-                  height: 165.0,
-                  child: DrawerHeader(
-                    decoration: BoxDecoration(color: Colors.white),
-                    child: Expanded(
-                      child: Row(
-                        children: [
-                          //  Image.asset("images/user_icon.svg", height: 20.0, width:20.0,),
-                          //  SizedBox(width:10.0,),
-                          Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  // SizedBox(
-                                  //   height: 5.0,
-                                  // ),
-                                  FutureBuilder(
-                                      future:getCurrentUID(),
-                                      builder: (BuildContext context,AsyncSnapshot data){
-                                        return Text(data.data);
-                                      }
-                                  )
-                                  ,
-
-                                  // SizedBox(
-                                  //   height: 0.0,
-                                  // ),
-                                  CircleAvatar(
-                                    backgroundColor: Colors.blueGrey, radius:25,
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  ElevatedButton(
-                                      onPressed: (){
-                                        signOut();
-                                        Navigator.pushReplacement(context,
-                                            MaterialPageRoute(builder: (context) => Authenticate()));
-                                      }, child: Text("Sign Out"))
-                                ],
-                              ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Divider(),
-                SizedBox(
-                  height: 50.0,
-                ),
-                ListTile(
-                  leading: Icon(Icons.history),
-                  title: Text(
-                    "Previous Trips",
-                    style: TextStyle(fontSize: 15.0),
-                  ),
-                ),
-                ListTile(
-                  leading: Icon(Icons.person),
-                  title: Text(
-                    "Visit Profile",
-                    style: TextStyle(fontSize: 15.0),
-                  ),
-                ),
-                ListTile(
-                  leading: Icon(Icons.info),
-                  title: Text(
-                    "About",
-                    style: TextStyle(fontSize: 15.0),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                AuthService().signOut();
+                HelperFunctions.saveUserLoggedInSharedPreference(false);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => Authenticate()));
+              },
+              child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Icon(Icons.exit_to_app)),
+            )
+          ],
         ),
         body: Stack(
             children: [

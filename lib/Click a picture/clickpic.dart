@@ -104,7 +104,7 @@ class _ClickPictureState extends State<ClickPicture> {
       try{
       Dio dio = new Dio();
       response = await dio.post<String>(
-          "http://192.168.140.75:5000/giveinfo", data: formData);
+          "http://192.168.1.18:5000/giveinfo", data: formData);
       if (response.statusCode == 201) {
         Fluttertoast.showToast(
             msg: 'Done!',
@@ -161,23 +161,25 @@ class _ClickPictureState extends State<ClickPicture> {
                 ),
                 Expanded(
                   child: Center(
-                    child: TextButton(
+                    child: TextButton.icon(
                       onPressed: ()async{
                         await flutterTts.setLanguage("en-US");
                         await flutterTts.setPitch(1);
                         await flutterTts.speak(description);
                       },
-                      child: Text("Start Audio Tour"),
+                      label: Text(""),
+                      icon: Icon(Icons.volume_up),
                     ),
                   ),
                 ),
                 Expanded(
                   child: Center(
-                    child: TextButton(
+                    child: TextButton.icon(
                       onPressed: ()async{
                         await flutterTts.stop();
                       },
-                      child: Text("Stop Audio Tour"),
+                      label: Text(""),
+                      icon: Icon(Icons.volume_off),
                     ),
                   ),
                 )

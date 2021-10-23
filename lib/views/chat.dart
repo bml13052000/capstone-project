@@ -19,7 +19,7 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> {
 
-  late Stream<QuerySnapshot> chats;
+  var chats;
   TextEditingController messageEditingController = new TextEditingController();
   var usertype;
 

@@ -23,6 +23,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController passwordEditingController = new TextEditingController();
   TextEditingController usernameEditingController =
       new TextEditingController();
+  TextEditingController phoneNumber = new TextEditingController();
   TextEditingController userCity = new TextEditingController();
 
   AuthService authService = new AuthService();
@@ -46,7 +47,8 @@ class _SignUpState extends State<SignUp> {
                 Map<String, String> userDataMap = {
                   "userName": usernameEditingController.text,
                   "userEmail": emailEditingController.text,
-                  "userType": userType
+                  "userType": userType,
+                  "phoneNumber":phoneNumber.text
                 };
 
                 databaseMethods.addUserInfo(userDataMap);
@@ -56,6 +58,8 @@ class _SignUpState extends State<SignUp> {
                     usernameEditingController.text);
                 HelperFunctions.saveUserEmailSharedPreference(
                     emailEditingController.text);
+                HelperFunctions.saveUserTypeSharedPreference(userType);
+                HelperFunctions.savePhoneNumberSharedPreference(phoneNumber.text);
 
 
                 Navigator.pushReplacement(context, MaterialPageRoute(
@@ -68,7 +72,8 @@ class _SignUpState extends State<SignUp> {
                   "userName": usernameEditingController.text,
                   "userEmail": emailEditingController.text,
                   "userType": userType,
-                  "city": userCity.text
+                  "city": userCity.text,
+                  "phoneNumber": phoneNumber.text
                 };
 
                 databaseMethods.addUserInfo(userDataMap);
@@ -78,6 +83,8 @@ class _SignUpState extends State<SignUp> {
                     usernameEditingController.text);
                 HelperFunctions.saveUserEmailSharedPreference(
                     emailEditingController.text);
+                HelperFunctions.saveUserTypeSharedPreference(userType);
+                HelperFunctions.savePhoneNumberSharedPreference(phoneNumber.text);
 
 
                 Navigator.pushReplacement(context, MaterialPageRoute(
@@ -90,38 +97,38 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  signUpWithGoogle()async{
-    await authService.signInWithGoogle(context).then((result){
-      if(result!=null){
-        Map<String, String?> userDataMap = {
-          "userName": result.displayName,
-          "userEmail": result.email,
-          "userType": userType,
-        };
-
-        databaseMethods.addUserInfo(userDataMap);
-
-        HelperFunctions.saveUserLoggedInSharedPreference(true);
-        HelperFunctions.saveUserNameSharedPreference(
-            result.displayName);
-        HelperFunctions.saveUserEmailSharedPreference(
-            result.email);
-        HelperFunctions.saveUserTypeSharedPreference('Tourist');
-
-        if (userType == "Tourist") {
-          Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) => HomePage()
-          ));
-        }
-        else {
-          Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) => ChatRoom()
-          ));
-        }
-
-      }
-    });
-  }
+  // signUpWithGoogle()async{
+  //   await authService.signInWithGoogle(context).then((result){
+  //     if(result!=null){
+  //       Map<String, String?> userDataMap = {
+  //         "userName": result.displayName,
+  //         "userEmail": result.email,
+  //         "userType": userType,
+  //       };
+  //
+  //       databaseMethods.addUserInfo(userDataMap);
+  //
+  //       HelperFunctions.saveUserLoggedInSharedPreference(true);
+  //       HelperFunctions.saveUserNameSharedPreference(
+  //           result.displayName);
+  //       HelperFunctions.saveUserEmailSharedPreference(
+  //           result.email);
+  //       HelperFunctions.saveUserTypeSharedPreference('Tourist');
+  //
+  //       if (userType == "Tourist") {
+  //         Navigator.pushReplacement(context, MaterialPageRoute(
+  //             builder: (context) => HomePage()
+  //         ));
+  //       }
+  //       else {
+  //         Navigator.pushReplacement(context, MaterialPageRoute(
+  //             builder: (context) => ChatRoom()
+  //         ));
+  //       }
+  //
+  //     }
+  //   });
+  // }
 
   Widget cForm(){
     if(userType=='Tourist'){
@@ -145,6 +152,12 @@ class _SignUpState extends State<SignUp> {
                 null : "Enter correct email";
               },
               decoration: textFieldInputDecoration("email"),
+            ),
+            TextFormField(
+              keyboardType: TextInputType.phone,
+              style: simpleTextStyle(),
+              decoration: textFieldInputDecoration("Phone number"),
+              controller: phoneNumber,
             ),
             TextFormField(
               obscureText: true,
@@ -184,6 +197,12 @@ class _SignUpState extends State<SignUp> {
               decoration: textFieldInputDecoration("email"),
             ),
             TextFormField(
+              keyboardType: TextInputType.phone,
+              style: simpleTextStyle(),
+              decoration: textFieldInputDecoration("Phone number"),
+              controller: phoneNumber,
+            ),
+            TextFormField(
               obscureText: true,
               style: simpleTextStyle(),
               decoration: textFieldInputDecoration("password"),
@@ -219,7 +238,21 @@ class _SignUpState extends State<SignUp> {
         padding: EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           children: [
-            Spacer(),
+            Expanded(
+              child: Center(
+                child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text("Sign Up",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+
+                  ),
+                ),
+              ),
+            ),
             DropdownButton(
               value: userType,
               items: items.map((String items){
@@ -301,20 +334,20 @@ class _SignUpState extends State<SignUp> {
             SizedBox(
               height: 16,
             ),
-            GestureDetector(
-              // onTap: signUpWithGoogle(),
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30), color: Colors.white),
-                width: MediaQuery.of(context).size.width,
-                child: Text(
-                  "Sign Up with Google",
-                  style: TextStyle(fontSize: 17, color: CustomTheme.textColor),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
+            // GestureDetector(
+            //   // onTap: signUpWithGoogle(),
+            //   child: Container(
+            //     padding: EdgeInsets.symmetric(vertical: 16),
+            //     decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(30), color: Colors.white),
+            //     width: MediaQuery.of(context).size.width,
+            //     child: Text(
+            //       "Sign Up with Google",
+            //       style: TextStyle(fontSize: 17, color: CustomTheme.textColor),
+            //       textAlign: TextAlign.center,
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: 10,
             ),
@@ -342,7 +375,7 @@ class _SignUpState extends State<SignUp> {
               ],
             ),
             SizedBox(
-              height: 50,
+              height: 30,
             )
           ],
         ),

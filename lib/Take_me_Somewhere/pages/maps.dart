@@ -236,9 +236,9 @@ import 'package:geolocator/geolocator.dart' as locator;
 
 
 
-void main() {
-  runApp(MyHomePage());
-}
+// void main() {
+//   runApp(MyHomePage());
+// }
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -251,13 +251,13 @@ class _MyHomePageState extends State<MyHomePage> {
   var radius;
   var lat;
   var long;
-  String value;
+  late String value;
   final radiusCon = new TextEditingController();
 
   bool location = false;
 
-  locator.Position position;
-  Widget _child;
+  late locator.Position position;
+  late Widget _child;
 
   Future<void> getPermission() async {
     PermissionStatus permission =
@@ -318,7 +318,7 @@ class _MyHomePageState extends State<MyHomePage> {
     zoom: 15.0,
   );
 
-  GoogleMapController _googleMapController;
+  late GoogleMapController _googleMapController;
 
   // @override
   // void dispose() {
