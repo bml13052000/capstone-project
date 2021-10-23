@@ -41,7 +41,7 @@ class _SignInState extends State<SignIn> {
           .then((result) async {
         if (result != null)  {
           QuerySnapshot userInfoSnapshot =
-              await DatabaseMethods().getUserInfo(emailEditingController.text);
+          await DatabaseMethods().getUserInfo(emailEditingController.text);
 
           HelperFunctions.saveUserLoggedInSharedPreference(true);
           HelperFunctions.saveUserNameSharedPreference(
@@ -73,15 +73,23 @@ class _SignInState extends State<SignIn> {
       });
     }
   }
+  
+  signInGoogle() async{
+    await authService.signInWithGoogle(context).then((result){
+      if(result!=null){
 
-  signInWithGoogle()async{
+        HelperFunctions.saveUserLoggedInSharedPreference(true);
+        HelperFunctions.saveUserNameSharedPreference(
+            result.displayName);
+        HelperFunctions.saveUserEmailSharedPreference(
+            result.email);
+        HelperFunctions.saveUserTypeSharedPreference('Tourist');
 
-      await authService.signInWithGoogle(context).then((result){
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
-      });
-
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()));
+      }
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +188,7 @@ class _SignInState extends State<SignIn> {
                   ),
                   GestureDetector(
                     onTap: (){
-                    signInWithGoogle();
+                    authService.signInWithGoogle(context);
                       },
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 16),

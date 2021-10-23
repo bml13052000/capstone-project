@@ -5,6 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../HomePage.dart';
+
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -57,10 +59,10 @@ class AuthService {
   Future<User?> signInWithGoogle(BuildContext context) async {
     final GoogleSignIn _googleSignIn = new GoogleSignIn();
 
-    final GoogleSignInAccount googleSignInAccount =
+    final GoogleSignInAccount? googleSignInAccount =
         await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
+        await googleSignInAccount!.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.credential(
         idToken: googleSignInAuthentication.idToken,
@@ -69,11 +71,17 @@ class AuthService {
     UserCredential result = await _auth.signInWithCredential(credential);
     User? user = result.user;
 
-    if (result == null) {
-    } else {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Chat(chatRoomId: '',)));
-    }
+    return result.user;
+
+
+
+
+    // if (result == null) {
+    // } else {
+    //   Navigator.push(context, MaterialPageRoute(builder: (context) => Chat(chatRoomId: '',)));
+    // }
   }
+
 
   Future signOut() async {
     try {

@@ -1,14 +1,17 @@
 import 'dart:io';
 import 'package:chatapp/helper/constants.dart';
+import 'package:chatapp/helper/helperfunctions.dart';
 import 'package:chatapp/services/database.dart';
+import 'package:chatapp/views/payments.dart';
 import 'package:chatapp/widget/widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Chat extends StatefulWidget {
   final String chatRoomId;
+  final String username;
 
-  Chat({required this.chatRoomId});
+  Chat({required this.username,required this.chatRoomId});
 
   @override
   _ChatState createState() => _ChatState();
@@ -18,7 +21,17 @@ class _ChatState extends State<Chat> {
 
   late Stream<QuerySnapshot> chats;
   TextEditingController messageEditingController = new TextEditingController();
-  String? Chatting_with;
+  var usertype;
+
+
+
+  getUserType() async {
+    await HelperFunctions.getUserTypeSharedPreference().then((val){
+      setState(() {
+        usertype  = val;
+      });
+    });
+  }
 
   Widget chatMessages(){
     return StreamBuilder(
@@ -67,13 +80,52 @@ class _ChatState extends State<Chat> {
       });
     });
     super.initState();
+    getUserType();
+  }
+
+  Widget paymentContainer(String usertype){
+    if(usertype=="Tourist"){
+      // DatabaseMethods().deleteChat(widget.chatRoomId);
+      return GestureDetector(
+        onTap: () {
+          // addMessage();
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context)=>payment(
+                payto: widget.username,
+                chatRoomID: widget.chatRoomId,
+              )
+          ));
+        },
+        child: Container(
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [
+                      const Color(0x36FFFFFF),
+                      const Color(0x0FFFFFFF)
+                    ],
+                    begin: FractionalOffset.topLeft,
+                    end: FractionalOffset.bottomRight
+                ),
+                borderRadius: BorderRadius.circular(40)
+            ),
+            padding: EdgeInsets.all(12),
+            child: Image.asset("assets/images/pay.png",
+              height: 25, width: 25,)),
+      );
+    }
+    else{
+      return Spacer();
+    }
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Constants.myName),
+        title: Text(widget.username),
         backgroundColor: Colors.orange,
       ),
       body: Container(
@@ -104,6 +156,9 @@ class _ChatState extends State<Chat> {
                           ),
                         )),
                     SizedBox(width: 16,),
+                    paymentContainer(usertype),
+                    SizedBox(width: 5,),
+
                     GestureDetector(
                       onTap: () {
                         addMessage();

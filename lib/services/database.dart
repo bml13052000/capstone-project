@@ -11,7 +11,7 @@ class DatabaseMethods {
     });
   }
 
-  getUserInfo(String email) async {
+  getUserInfo(String? email) async {
     return FirebaseFirestore.instance
         .collection("users")
         .where("userEmail", isEqualTo: email)
@@ -27,6 +27,14 @@ class DatabaseMethods {
           .collection("users")
           .where('userName', isEqualTo: searchField)
           .get();
+  }
+
+  searchByCity(String searchField) {
+
+    return FirebaseFirestore.instance
+        .collection("users")
+        .where('city', isEqualTo: searchField)
+        .get();
   }
 
   Future<void> addChatRoom(chatRoom, chatRoomId) async {
@@ -55,6 +63,16 @@ class DatabaseMethods {
         .doc(chatRoomId)
         .collection("chats")
         .add(chatMessageData).catchError((e){
+          print(e.toString());
+    });
+  }
+  
+  Future<void> deleteChat(String chatRoomId)async{
+    
+    FirebaseFirestore.instance.collection("chatRoom")
+        .doc(chatRoomId)
+        .delete()
+        .catchError((e){
           print(e.toString());
     });
   }

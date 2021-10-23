@@ -19,7 +19,7 @@ class _SearchState extends State<Search> {
   TextEditingController searchEditingController = new TextEditingController();
   late QuerySnapshot searchResultSnapshot;
   // Future<FirebaseUser> user= FirebaseAuth.instance.currentUser();
-
+  var name;
 
   bool isLoading = false;
   bool haveUserSearched = false;
@@ -29,7 +29,7 @@ class _SearchState extends State<Search> {
       setState(() {
         isLoading = true;
       });
-      await databaseMethods.searchByName(searchEditingController.text)
+      await databaseMethods.searchByCity(searchEditingController.text)
           .then((snapshot){
             // if(searchEditingController.text!=)
             searchResultSnapshot = snapshot;
@@ -48,9 +48,11 @@ class _SearchState extends State<Search> {
       shrinkWrap: true,
       itemCount: searchResultSnapshot.docs.length,
         itemBuilder: (context, index){
+        name=searchResultSnapshot.docs[index]['userName'];
         return userTile(
             searchResultSnapshot.docs[index]['userName'],
           searchResultSnapshot.docs[index]["userEmail"],
+          searchResultSnapshot.docs[index]['city']
         );
         }) : Container();
   }
@@ -70,13 +72,14 @@ class _SearchState extends State<Search> {
 
     Navigator.push(context, MaterialPageRoute(
       builder: (context) => Chat(
+        username: name,
         chatRoomId: chatRoomId,
       )
     ));
 
   }
 
-  Widget userTile(String userName,String userEmail){
+  Widget userTile(String userName,String userEmail,String userCity){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
@@ -93,6 +96,13 @@ class _SearchState extends State<Search> {
               ),
               Text(
                 userEmail,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16
+                ),
+              ),
+              Text(
+                userCity,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 16

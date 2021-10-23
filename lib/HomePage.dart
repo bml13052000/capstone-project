@@ -5,6 +5,7 @@ import 'dart:async';
 //import 'package:country_picker/country_picker.dart';
 import 'package:chatapp/Take_me_Somewhere/pages/new_home.dart';
 import 'package:chatapp/Take_me_Somewhere/pages/new_recommendation.dart';
+import 'package:chatapp/helper/helperfunctions.dart';
 import 'package:chatapp/services/auth.dart';
 import 'package:chatapp/views/chatrooms.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -91,6 +92,7 @@ class _HomePageState extends State<HomePage> {
 
   signOut() async {
     _auth.signOut();
+    HelperFunctions.saveUserLoggedInSharedPreference(false);
 
     final googleSignIn = GoogleSignIn();
     await googleSignIn.signOut();
@@ -150,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                                   SizedBox(height: 5.0),
                                   ElevatedButton(
                                       onPressed: (){
-                                        AuthService().signOut();
+                                        signOut();
                                         Navigator.pushReplacement(context,
                                             MaterialPageRoute(builder: (context) => Authenticate()));
                                       }, child: Text("Sign Out"))

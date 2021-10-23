@@ -16,6 +16,7 @@ class ChatRoom extends StatefulWidget {
 
 class _ChatRoomState extends State<ChatRoom> {
   dynamic chatRooms;
+  String? sender;
 
   Widget chatRoomsList() {
     return StreamBuilder(
@@ -26,6 +27,10 @@ class _ChatRoomState extends State<ChatRoom> {
                 itemCount: snapshot.data.docs.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
+                  sender=snapshot.data.docs[index]['chatRoomId']
+                      .toString()
+                      .replaceAll("_", "")
+                      .replaceAll(Constants.myName, "");
                   return ChatRoomsTile(
                     userName: snapshot.data.docs[index]['chatRoomId']
                         .toString()
@@ -74,6 +79,7 @@ class _ChatRoomState extends State<ChatRoom> {
           GestureDetector(
             onTap: () {
               AuthService().signOut();
+              HelperFunctions.saveUserLoggedInSharedPreference(false);
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => Authenticate()));
             },
@@ -109,6 +115,7 @@ class ChatRoomsTile extends StatelessWidget {
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
           builder: (context) => Chat(
+            username: userName,
             chatRoomId: chatRoomId,
           )
         ));

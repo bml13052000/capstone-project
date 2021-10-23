@@ -23,6 +23,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController passwordEditingController = new TextEditingController();
   TextEditingController usernameEditingController =
       new TextEditingController();
+  TextEditingController userCity = new TextEditingController();
 
   AuthService authService = new AuthService();
   DatabaseMethods databaseMethods = new DatabaseMethods();
@@ -41,26 +42,44 @@ class _SignUpState extends State<SignUp> {
       await authService.signUpWithEmailAndPassword(emailEditingController.text,
           passwordEditingController.text,usernameEditingController.text).then((result){
             if(result != null) {
-              Map<String, String> userDataMap = {
-                "userName": usernameEditingController.text,
-                "userEmail": emailEditingController.text,
-                "userType": userType
-              };
+              if(userType=='Tourist') {
+                Map<String, String> userDataMap = {
+                  "userName": usernameEditingController.text,
+                  "userEmail": emailEditingController.text,
+                  "userType": userType
+                };
 
-              databaseMethods.addUserInfo(userDataMap);
+                databaseMethods.addUserInfo(userDataMap);
 
-              HelperFunctions.saveUserLoggedInSharedPreference(true);
-              HelperFunctions.saveUserNameSharedPreference(
-                  usernameEditingController.text);
-              HelperFunctions.saveUserEmailSharedPreference(
-                  emailEditingController.text);
+                HelperFunctions.saveUserLoggedInSharedPreference(true);
+                HelperFunctions.saveUserNameSharedPreference(
+                    usernameEditingController.text);
+                HelperFunctions.saveUserEmailSharedPreference(
+                    emailEditingController.text);
 
-              if (userType == "Tourist") {
+
                 Navigator.pushReplacement(context, MaterialPageRoute(
                     builder: (context) => HomePage()
                 ));
+
               }
               else {
+                Map<String, String> userDataMap = {
+                  "userName": usernameEditingController.text,
+                  "userEmail": emailEditingController.text,
+                  "userType": userType,
+                  "city": userCity.text
+                };
+
+                databaseMethods.addUserInfo(userDataMap);
+
+                HelperFunctions.saveUserLoggedInSharedPreference(true);
+                HelperFunctions.saveUserNameSharedPreference(
+                    usernameEditingController.text);
+                HelperFunctions.saveUserEmailSharedPreference(
+                    emailEditingController.text);
+
+
                 Navigator.pushReplacement(context, MaterialPageRoute(
                     builder: (context) => ChatRoom()
                 ));
@@ -70,6 +89,127 @@ class _SignUpState extends State<SignUp> {
       });
     }
   }
+
+  signUpWithGoogle()async{
+    await authService.signInWithGoogle(context).then((result){
+      if(result!=null){
+        Map<String, String?> userDataMap = {
+          "userName": result.displayName,
+          "userEmail": result.email,
+          "userType": userType,
+        };
+
+        databaseMethods.addUserInfo(userDataMap);
+
+        HelperFunctions.saveUserLoggedInSharedPreference(true);
+        HelperFunctions.saveUserNameSharedPreference(
+            result.displayName);
+        HelperFunctions.saveUserEmailSharedPreference(
+            result.email);
+        HelperFunctions.saveUserTypeSharedPreference('Tourist');
+
+        if (userType == "Tourist") {
+          Navigator.pushReplacement(context, MaterialPageRoute(
+              builder: (context) => HomePage()
+          ));
+        }
+        else {
+          Navigator.pushReplacement(context, MaterialPageRoute(
+              builder: (context) => ChatRoom()
+          ));
+        }
+
+      }
+    });
+  }
+
+  Widget cForm(){
+    if(userType=='Tourist'){
+      return Form(
+        key: formKey,
+        child: Column(
+          children: [
+            TextFormField(
+              style: simpleTextStyle(),
+              controller: usernameEditingController,
+              validator: (val){
+                return val!.isEmpty || val.length < 3 ? "Enter Username 3+ characters" : null;
+              },
+              decoration: textFieldInputDecoration("username"),
+            ),
+            TextFormField(
+              controller: emailEditingController,
+              style: simpleTextStyle(),
+              validator: (val){
+                return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val!) ?
+                null : "Enter correct email";
+              },
+              decoration: textFieldInputDecoration("email"),
+            ),
+            TextFormField(
+              obscureText: true,
+              style: simpleTextStyle(),
+              decoration: textFieldInputDecoration("password"),
+              controller: passwordEditingController,
+              validator:  (val){
+                return val!.length < 6 ? "Enter Password 6+ characters" : null;
+              },
+
+            ),
+          ],
+        ),
+      );
+    }
+
+    else{
+      return Form(
+        key: formKey,
+        child: Column(
+          children: [
+            TextFormField(
+              style: simpleTextStyle(),
+              controller: usernameEditingController,
+              validator: (val){
+                return val!.isEmpty || val.length < 3 ? "Enter Username 3+ characters" : null;
+              },
+              decoration: textFieldInputDecoration("username"),
+            ),
+            TextFormField(
+              controller: emailEditingController,
+              style: simpleTextStyle(),
+              validator: (val){
+                return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val!) ?
+                null : "Enter correct email";
+              },
+              decoration: textFieldInputDecoration("email"),
+            ),
+            TextFormField(
+              obscureText: true,
+              style: simpleTextStyle(),
+              decoration: textFieldInputDecoration("password"),
+              controller: passwordEditingController,
+              validator:  (val){
+                return val!.length < 6 ? "Enter Password 6+ characters" : null;
+              },
+            ),
+            TextFormField(
+              // obscureText: true,
+              style: simpleTextStyle(),
+              decoration: textFieldInputDecoration("Enter City Name"),
+              controller: userCity,
+              // validator:  (val){
+              //   return val!.length < 6 ? "Enter Password 6+ characters" : null;
+              // },
+            ),
+
+          ],
+        ),
+      );
+    }
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -100,43 +240,44 @@ class _SignUpState extends State<SignUp> {
               },
             ),
 
+            cForm(),
 
-            Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    style: simpleTextStyle(),
-                    controller: usernameEditingController,
-                    validator: (val){
-                      return val!.isEmpty || val.length < 3 ? "Enter Username 3+ characters" : null;
-                    },
-                    decoration: textFieldInputDecoration("username"),
-                  ),
-                  TextFormField(
-                    controller: emailEditingController,
-                    style: simpleTextStyle(),
-                    validator: (val){
-                      return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val!) ?
-                          null : "Enter correct email";
-                    },
-                    decoration: textFieldInputDecoration("email"),
-                  ),
-                  TextFormField(
-                    obscureText: true,
-                    style: simpleTextStyle(),
-                    decoration: textFieldInputDecoration("password"),
-                    controller: passwordEditingController,
-                    validator:  (val){
-                      return val!.length < 6 ? "Enter Password 6+ characters" : null;
-                    },
-
-                  ),
-                ],
-              ),
-            ),
+            // Form(
+            //   key: formKey,
+            //   child: Column(
+            //     children: [
+            //       TextFormField(
+            //         style: simpleTextStyle(),
+            //         controller: usernameEditingController,
+            //         validator: (val){
+            //           return val!.isEmpty || val.length < 3 ? "Enter Username 3+ characters" : null;
+            //         },
+            //         decoration: textFieldInputDecoration("username"),
+            //       ),
+            //       TextFormField(
+            //         controller: emailEditingController,
+            //         style: simpleTextStyle(),
+            //         validator: (val){
+            //           return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val!) ?
+            //               null : "Enter correct email";
+            //         },
+            //         decoration: textFieldInputDecoration("email"),
+            //       ),
+            //       TextFormField(
+            //         obscureText: true,
+            //         style: simpleTextStyle(),
+            //         decoration: textFieldInputDecoration("password"),
+            //         controller: passwordEditingController,
+            //         validator:  (val){
+            //           return val!.length < 6 ? "Enter Password 6+ characters" : null;
+            //         },
+            //
+            //       ),
+            //     ],
+            //   ),
+            // ),
             SizedBox(
-              height: 16,
+              height: 10,
             ),
             GestureDetector(
               onTap: (){
@@ -160,19 +301,22 @@ class _SignUpState extends State<SignUp> {
             SizedBox(
               height: 16,
             ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 16),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30), color: Colors.white),
-              width: MediaQuery.of(context).size.width,
-              child: Text(
-                "Sign Up with Google",
-                style: TextStyle(fontSize: 17, color: CustomTheme.textColor),
-                textAlign: TextAlign.center,
+            GestureDetector(
+              // onTap: signUpWithGoogle(),
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30), color: Colors.white),
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                  "Sign Up with Google",
+                  style: TextStyle(fontSize: 17, color: CustomTheme.textColor),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
             SizedBox(
-              height: 16,
+              height: 10,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
