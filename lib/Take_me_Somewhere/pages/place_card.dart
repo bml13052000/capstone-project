@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/Take_me_Somewhere/pages/Place.dart';
 
@@ -37,13 +38,14 @@ class PlaceCard extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   height: 50,
-                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 9),
                   //decoration: cardInfoDecoration,
 
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Column(
                             children: [
@@ -54,16 +56,19 @@ class PlaceCard extends StatelessWidget {
                                     fontSize: 12,
                                     fontWeight: FontWeight.w700),
                               ),
-                              Text(
-                                place.location,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w700),
+                              FittedBox(
+                                fit: BoxFit.fitHeight,
+                                child: Text(
+                                  place.location,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.w700),
+                                ),
                               ),
                             ],
                           ),
-                          Spacer(),
+                          // Spacer(),
 
                           //LikedButton()
                         ],

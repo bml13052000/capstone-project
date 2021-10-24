@@ -17,7 +17,9 @@ import 'Take_me_Somewhere/pages/preference.dart';
 import 'Take_me_Somewhere/pages/route.dart';
 import 'Take_me_Somewhere/pages/select_a_city.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -37,7 +39,6 @@ class _MyAppState extends State<MyApp> {
     getLoggedInState();
     getUserType();
     super.initState();
-    // Firebase.initializeApp();
   }
 
   getLoggedInState() async {
@@ -70,7 +71,6 @@ class _MyAppState extends State<MyApp> {
       routes: {
     // '/': (context) => Loading(),
         '/': (context) {
-          Firebase.initializeApp();
           if(userIsLoggedIn != null) {
             if(userIsLoggedIn){
               if(userType=='Tourist'){
