@@ -214,7 +214,7 @@ class _FormTypeAheadPageState extends State<FormTypeAheadPage> {
             Container(
               decoration: new BoxDecoration(
                 image: new DecorationImage(
-                  image: new AssetImage("images/background.PNG"),
+                  image: new AssetImage("assets/images/background.PNG"),
                   fit: BoxFit.cover,
                 ),
               ),

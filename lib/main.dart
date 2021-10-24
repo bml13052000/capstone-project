@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:chatapp/HomePage.dart';
 import 'package:chatapp/Take_me_Somewhere/pages/new_home.dart';
 import 'package:chatapp/helper/authenticate.dart';
