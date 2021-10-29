@@ -52,7 +52,9 @@ class _SearchState extends State<Search> {
         return userTile(
             searchResultSnapshot.docs[index]['userName'],
           searchResultSnapshot.docs[index]["userEmail"],
-          searchResultSnapshot.docs[index]['city']
+          searchResultSnapshot.docs[index]['city'],
+          searchResultSnapshot.docs[index]['rate_per_day'],
+
         );
         }) : Container();
   }
@@ -79,7 +81,7 @@ class _SearchState extends State<Search> {
 
   }
 
-  Widget userTile(String userName,String userEmail,String userCity){
+  Widget userTile(String userName,String userEmail,String userCity,String tourRate){
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
@@ -103,6 +105,13 @@ class _SearchState extends State<Search> {
               ),
               Text(
                 userCity,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16
+                ),
+              ),
+              Text(
+                "Rate: Rs"+tourRate+"/day",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 16

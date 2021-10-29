@@ -25,6 +25,7 @@ class _SignUpState extends State<SignUp> {
       new TextEditingController();
   TextEditingController phoneNumber = new TextEditingController();
   TextEditingController userCity = new TextEditingController();
+  TextEditingController tourGuide = new TextEditingController();
 
   AuthService authService = new AuthService();
   DatabaseMethods databaseMethods = new DatabaseMethods();
@@ -73,7 +74,8 @@ class _SignUpState extends State<SignUp> {
                   "userEmail": emailEditingController.text,
                   "userType": userType,
                   "city": userCity.text,
-                  "phoneNumber": phoneNumber.text
+                  "phoneNumber": phoneNumber.text,
+                  "rate_per_day": tourGuide.text,
                 };
 
                 databaseMethods.addUserInfo(userDataMap);
@@ -85,6 +87,7 @@ class _SignUpState extends State<SignUp> {
                     emailEditingController.text);
                 HelperFunctions.saveUserTypeSharedPreference(userType);
                 HelperFunctions.savePhoneNumberSharedPreference(phoneNumber.text);
+                HelperFunctions.saveTourRateSharedPreference(tourGuide.text);
 
 
                 Navigator.pushReplacement(context, MaterialPageRoute(
@@ -215,6 +218,15 @@ class _SignUpState extends State<SignUp> {
               // obscureText: true,
               style: simpleTextStyle(),
               decoration: textFieldInputDecoration("Enter City Name"),
+              controller: userCity,
+              // validator:  (val){
+              //   return val!.length < 6 ? "Enter Password 6+ characters" : null;
+              // },
+            ),
+            TextFormField(
+              // obscureText: true,
+              style: simpleTextStyle(),
+              decoration: textFieldInputDecoration("Enter your rate per day: "),
               controller: userCity,
               // validator:  (val){
               //   return val!.length < 6 ? "Enter Password 6+ characters" : null;

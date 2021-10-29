@@ -1,5 +1,6 @@
 import 'package:chatapp/helper/constants.dart';
 import 'package:chatapp/services/auth.dart';
+import 'package:chatapp/views/payments.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -90,6 +91,19 @@ class DatabaseMethods {
         .collection("users")
         .doc("docID")
         .get();
+  }
+
+  setPaymentData(String name,String amount)async{
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .where('userName',isEqualTo: name)
+        .get()
+        .then((querySnapshot){
+          querySnapshot.docs.forEach((documentSnapshot) {
+            documentSnapshot.reference.update({"rate_per_day":amount});
+          });
+    });
+
   }
 
 }

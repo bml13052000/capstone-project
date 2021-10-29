@@ -6,6 +6,7 @@ import 'package:chatapp/services/auth.dart';
 import 'package:chatapp/services/database.dart';
 import 'package:chatapp/views/chat.dart';
 import 'package:chatapp/views/search.dart';
+import 'package:chatapp/views/setPayment.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class ChatRoom extends StatefulWidget {
 class _ChatRoomState extends State<ChatRoom> {
   dynamic chatRooms;
   String? sender;
-
+  var usertype;
   Widget chatRoomsList() {
     return StreamBuilder(
       stream: chatRooms,
@@ -55,6 +56,7 @@ class _ChatRoomState extends State<ChatRoom> {
 
   getUserInfogetChats() async {
     Constants.myName = await HelperFunctions.getUserNameSharedPreference();
+    usertype = await HelperFunctions.getUserTypeSharedPreference();
     DatabaseMethods().getUserChats(Constants.myName).then((snapshots) {
       setState(() {
         chatRooms = snapshots;
@@ -62,6 +64,27 @@ class _ChatRoomState extends State<ChatRoom> {
             "we got the data + ${chatRooms.toString()} this is name  ${Constants.myName}");
       });
     });
+  }
+
+  Widget conditionalFloatingActionButton(String usertype) {
+    if (usertype == 'Tourist') {
+      return FloatingActionButton(
+        child: Icon(Icons.search),
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Search()));
+        },
+      );
+    }
+    else {
+      return FloatingActionButton(
+        child: Icon(Icons.payment),
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => SetPayment()));
+        },
+      );
+    }
   }
 
   @override
@@ -92,13 +115,7 @@ class _ChatRoomState extends State<ChatRoom> {
       body: Container(
         child: chatRoomsList(),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.search),
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Search()));
-        },
-      ),
+      floatingActionButton:conditionalFloatingActionButton(usertype)
     );
   }
 }
