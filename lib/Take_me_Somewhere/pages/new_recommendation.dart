@@ -50,8 +50,8 @@ Future<List<String>> _retrieveDest() async {
       body: jsonEncode({
         "userId": 10.toString(),
         "city": selectedCity.toString(),
-        "lat": 12.9440.toString(),
-        "lng": 77.6236.toString(),
+        "lat": lati,
+        "lng": longi,
         "radius": selectedradius.toString(),
         "prefer": category,
       }));
@@ -87,7 +87,7 @@ Future<List<String>> _retrieveDest() async {
     String s = await ref.getDownloadURL();
     urls.add(s);*/
     var ref =
-        firebase_storage.FirebaseStorage.instance.ref().child('Amoeba.jpg');
+    firebase_storage.FirebaseStorage.instance.ref().child('Amoeba.jpg');
     String s = "";
     //works
     /* try {
@@ -150,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    
+
     //Future<List<String>> res = getData();
     Firebase.initializeApp().whenComplete(() {
       print("completed");
@@ -222,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             child: Padding(
                               padding:
-                                  EdgeInsets.fromLTRB(120.0, 20.0, 20.0, 20.0),
+                              EdgeInsets.fromLTRB(120.0, 20.0, 20.0, 20.0),
                               //EdgeInsets.all(10)
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -230,9 +230,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: <Widget>[
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Container(
                                         width: 120.0,
@@ -250,12 +250,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                         value: dest[index].isSelected,
                                         onChanged: (s) {
                                           dest[index].isSelected =
-                                              !dest[index].isSelected;
+                                          !dest[index].isSelected;
                                           if (dest[index].isSelected) {
                                             title.add(dest[index].title);
                                             lat.add(dest[index].latitude);
                                             lng.add(dest[index].longitude);
-                                            
+
                                             print(lat);
                                             print(lng);
                                             print(title);
@@ -263,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             title.remove(dest[index].title);
                                             lat.remove(dest[index].latitude);
                                             lng.remove(dest[index].longitude);
-                                            
+
                                             print(lat);
                                             print(lng);
                                             print(title);
@@ -302,23 +302,23 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          
+
                         ],
                       );
                     },
                   ),
                 ),
                 ElevatedButton(
-                onPressed: ()  {
-                    Navigator.pushNamed(context, '/show_route');
-                },
-                child: Text(
-                  "Get Route",
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xffdd8e58),
-                ))
+                    onPressed: ()  {
+                      Navigator.pushNamed(context, '/show_route');
+                    },
+                    child: Text(
+                      "Get Route",
+                      style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xffdd8e58),
+                    ))
               ],
             )));
   }

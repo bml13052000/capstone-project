@@ -104,7 +104,7 @@ class _ClickPictureState extends State<ClickPicture> {
       try{
       Dio dio = new Dio();
       response = await dio.post<String>(
-          "https://smaarak-vision.herokuapp.com/giveinfo", data: formData);
+          "http://192.168.1.18:5000/giveinfo", data: formData);
       if (response.statusCode == 201) {
         Fluttertoast.showToast(
             msg: 'Done!',

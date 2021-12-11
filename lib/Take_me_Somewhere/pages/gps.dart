@@ -11,14 +11,14 @@ class gpsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: title,
-          theme: ThemeData(
-              scaffoldBackgroundColor: const Color(0xffe5d1b8)),
-          home: gps(),
-          routes: {
-            '/preference': (context) => MainPage(),
-          });
+      debugShowCheckedModeBanner: false,
+      title: title,
+      theme: ThemeData(
+          scaffoldBackgroundColor: const Color(0xffe5d1b8)),
+      home: gps(),
+      routes: {
+        '/preference': (context) => MainPage(),
+      });
 }
 
 class gps extends StatefulWidget {
@@ -29,6 +29,8 @@ class gps extends StatefulWidget {
 }
 var lats;
 var longs;
+late String lati;
+late String longi;
 
 class gpsState extends State<gps> {
   var locationMessage = "";
@@ -42,7 +44,7 @@ class gpsState extends State<gps> {
 
   Future<void> getPermission() async {
     PermissionStatus permission =
-        await LocationPermissions().checkPermissionStatus();
+    await LocationPermissions().checkPermissionStatus();
 
     if (permission == PermissionStatus.denied) {
       await LocationPermissions().requestPermissions();
@@ -85,7 +87,7 @@ class gpsState extends State<gps> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Color(0xffdd8e58),
-        
+
       ),
       body: Center(
         //child: Padding(
@@ -131,10 +133,12 @@ class gpsState extends State<gps> {
                     List<String> latlongList = locationMessage.split(',');
                     // print(latlongList);
                     // print(latlongList[0]);
-                    lats = latlongList[0].substring(10);
+                    // lats = latlongList[0].substring(10);
+                    lati = latlongList[0].substring(9).toString();
                     // print(latlongList[1]);
                     // print(lats);
-                    longs = latlongList[1].substring(12);
+                    //longs = latlongList[1].substring(12);
+                    longi = latlongList[1].substring(11).toString();
                     // print(longs);
                   });
                   Navigator.pushNamed(context, '/preference');
