@@ -36,9 +36,9 @@ class HelperFunctions{
     return await preferences.setString(sharedPreferencePhoneNumberKey, phno);
   }
 
-  static Future<bool> saveTourRateSharedPreference(String phno) async{
+  static Future<bool> saveTourRateSharedPreference(String rate) async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return await preferences.setString(sharedPreferenceTourGuideRateKey, phno);
+    return await preferences.setString(sharedPreferenceTourGuideRateKey, rate);
   }
 
   /// fetching data from sharedpreference

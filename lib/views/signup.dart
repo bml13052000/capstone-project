@@ -226,8 +226,9 @@ class _SignUpState extends State<SignUp> {
             TextFormField(
               // obscureText: true,
               style: simpleTextStyle(),
+              keyboardType: TextInputType.number,
               decoration: textFieldInputDecoration("Enter your rate per day: "),
-              controller: userCity,
+              controller: tourGuide,
               // validator:  (val){
               //   return val!.length < 6 ? "Enter Password 6+ characters" : null;
               // },

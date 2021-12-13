@@ -11,7 +11,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final allChecked = CheckBoxModal(title: 'Select All');
+  // final allChecked = CheckBoxModal(title: 'Select All');
 
   final checkBoxList = [
     CheckBoxModal(title: 'Art'),
@@ -55,15 +55,15 @@ class _MainPageState extends State<MainPage> {
         ),
         body: ListView(
           children: [
-            ListTile(
-              onTap: () => onAllClicked(allChecked),
-              leading: Checkbox(
-                value: allChecked.value,
-                onChanged: (value) => onAllClicked(allChecked),
-              ),
-              title: Text(allChecked.title,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            ),
+            // ListTile(
+            //   onTap: () => onAllClicked(allChecked),
+            //   leading: Checkbox(
+            //     value: allChecked.value,
+            //     onChanged: (value) => onAllClicked(allChecked),
+            //   ),
+            //   title: Text(allChecked.title,
+            //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            // ),
             Divider(),
             ...checkBoxList
                 .map((item) => ListTile(
@@ -92,11 +92,11 @@ class _MainPageState extends State<MainPage> {
         ));
   }
 
-  onAllClicked(CheckBoxModal ckbItem) {
-    setState(() {
-      allChecked.value = !allChecked.value;
-    });
-  }
+  // onAllClicked(CheckBoxModal ckbItem) {
+  //   setState(() {
+  //     allChecked.value = !allChecked.value;
+  //   });
+  // }
 
   onItemClicked(CheckBoxModal ckbItem) {
     setState(() {
